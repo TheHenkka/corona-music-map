@@ -24,7 +24,7 @@ Tool to visualize changes to Spotify listening preferences during COVID-19 pande
 
 - [Spotify Charts](https://spotifycharts.com/regional)
 - [Johns Hopkins University COVID-19 data](https://github.com/CSSEGISandData/COVID-19)
-- [API for COVID-19 data from Johns Hopkins CSSE] (https://covid19api.com/)
+- [API for COVID-19 data from Johns Hopkins CSSE](https://covid19api.com/)
 
 ## Author
 Hentter Eloranta
