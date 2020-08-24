@@ -26,4 +26,4 @@ Tool to visualize changes to Spotify listening preferences during COVID-19 pande
 - [EU ODP COVID-19 data](https://data.europa.eu/euodp/en/data/dataset/covid-19-coronavirus-data/resource/260bbbde-2316-40eb-aec3-7cd7bfc2f590)
 
 ## Author
-* **Hentter Eloranta*
+Hentter Eloranta
