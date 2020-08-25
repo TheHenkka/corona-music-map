@@ -1,6 +1,6 @@
 # corona-music-map
 
-Tool to visualize changes to Spotify listening preferences during COVID-19 pandemic. Using open data from EU and Spotify
+Tool to visualize changes to Spotify listening preferences during COVID-19 pandemic. Using open data from Johns Hopkins University and Spotify
 
 ## Getting started
 
