@@ -1,13 +1,18 @@
-//import * as components from './components';
-import {test} from './components/test.js';
-import {axios} from './components/test.js';
+import * as components from './components';
+import {test} from './components/index.js';
+import {axios} from './components/index.js';
 //import {axios2} from './components/test.js';
+import './styles/index.scss';
 
-import './styles/main.scss';
+//Initalizing compomonents
+async function init() {
 
+    await components.MapComponent();
+    
+}
+
+init();
 
 console.log(test('Hello'));
 console.log(axios);
 //console.log(axios2);
-
-//console.log(axios.response.data)
