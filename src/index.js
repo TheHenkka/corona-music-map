@@ -4,7 +4,7 @@ import {axios} from './components/index.js';
 //import {axios2} from './components/test.js';
 import './styles/index.scss';
 
-//Initalizing compomonents
+//Initalizing components
 async function init() {
 
     await components.MapComponent();

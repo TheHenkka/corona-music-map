@@ -2,8 +2,8 @@ import jsonMap from './maps/map.json';
 import { geoMercator, geoPath, select } from 'd3';
 import * as topojson from 'topojson-client';
 
-const width = 1920;
-const height = 1080;
+const width = 1200;
+const height = 600;
 
 const svg = select('#map')
     .append('svg')
