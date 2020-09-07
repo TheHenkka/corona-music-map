@@ -1,9 +1,9 @@
+import codes from '../../../data/nameToCode.json';
 const axios = require('axios');
-const axios2 = require('axios');
 let spotifyData = [];
 const spot = document.getElementById('spotify');
 
-//Delete Spotify embed
+//Delete old Spotify embed
 if (spot.childElementCount != 0) {
     while (spot.firstChild) {
         spot.removeChild(spot.firstChild);
@@ -11,41 +11,48 @@ if (spot.childElementCount != 0) {
 }
 
 
-//Using Axios get data from Spotify. Goes through proxy server.
-axios.get('regional/us/weekly/2019-12-27--2020-01-03/download')
-    .then(function (response) {
-        //Get country's top songs from the week. Add them to Spotify embed. 
-        if (response.status = "200" && response.data != []) {
-            console.log("OK!");
+//TODO: Tests and checks
+//Finds Spotify data from selected country
+function getSpotifyData() {
 
-            spotifyData = response.data;
-            let spotURL = spotifyData.split('\n')[2].split('open.spotify.com/')[1];
-            spot.src = "http://open.spotify.com/embed/" + spotURL;
+    //const date = '2019-12-27'
+    let firstDay = new Date("2019-12-27");
+    firstDay.setDate(firstDay.getDate() + 7 * window.week);
 
-            console.log(spotifyData);
-        }
+    let lastDay = new Date("2019-12-27");
+    lastDay.setDate(lastDay.getDate() + 14 * window.week);
 
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-        console.log("error");
-    });
+    const date = firstDay.toISOString().split('T')[0] + '--' + lastDay.toISOString().split('T')[0];
+    console.log(date);
 
-export { axios }
+    let countryCode = "global";
+    
+    //Find matching country code using country name
+    countryCode = codes.find(item => item.country === window.country).abbreviation.toLowerCase();
 
-//Using Axios get data from COVID-19 API.
-axios2.get('https://api.covid19api.com/dayone/country/south-africa/status/confirmed')
-    .then(function (response) {
-        if (response.status = "200") {
-            console.log("OK!");
-            console.log(response.data);
-        }
-    })
-    .catch(function (error) {
-        // handle error
+    //Using Axios get data from Spotify. Goes through proxy server.
+    axios.get('regional/' + countryCode + '/weekly/' + date + '/download')
+        .then(function (response) {
+            //Get country's top songs from the week. Add them to Spotify embed. 
+            if (response.status = "200" && response.data != []) {
+                console.log("OK!");
 
-        console.log(error);
-    });
+                spotifyData = response.data;
+                let spotURL = spotifyData.split('\n')[2].split('open.spotify.com/')[1];
+                spot.src = "http://open.spotify.com/embed/" + spotURL;
 
-export { axios2 }
+                console.log(spotifyData);
+                console.log(window.country);
+            }
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+            console.log("error");
+        });
+}
+
+
+export default () => {
+    getSpotifyData();
+};

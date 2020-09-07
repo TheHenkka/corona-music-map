@@ -10,7 +10,7 @@ const svg = select('#map')
     .attr('width', width)
     .attr('height', height);
 
-const projection = geoMercator().center([25, 60]).scale(400);
+const projection = geoMercator().center([25, 60]).scale(100);
 const path = geoPath().projection(projection);
 
 let clickedCountry = [];
