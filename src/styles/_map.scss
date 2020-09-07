@@ -1,4 +1,9 @@
 .countries {
-    fill: darkgreen;
-    stroke: black;
+    fill: darkslategray;
+    stroke: darkred;
 }
+
+.selected {
+    stroke: green;
+    fill: darkred;
+  }
