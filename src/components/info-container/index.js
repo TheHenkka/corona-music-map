@@ -1,4 +1,6 @@
 const axios = require('axios');
+const testi = document.getElementById('info');
+//import { weekChanged } from './events';
 
 //Using Axios get data from COVID-19 API.
 function getCoronaData() {
@@ -18,6 +20,23 @@ function getCoronaData() {
         });
 }
 
+function dothis(){
+    console.log("WEEK" + window.week);
+    window.week++;
+}
+
+function test() {
+
+    var newButton = document.createElement("button")
+    newButton.innerHTML ="HELO";
+    newButton.addEventListener("click", dothis);
+    console.log("1111");
+    testi.appendChild(newButton);
+    console.log("2222");
+
+}
+
 export default () => {
     getCoronaData();
+    test();
 };

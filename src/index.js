@@ -11,8 +11,6 @@ async function init() {
 
 }
 
-init();
-//document.addEventListener('DOMContentLoaded', init, false);
+document.addEventListener('DOMContentLoaded', init);
 
-
-console.log('Hello');
+//console.log('Hello');

@@ -38,7 +38,7 @@ const drawMap = (map) => {
 function selectedCountry() {
 
     clickedCountry = select(this);
-    console.log(clickedCountry);
+    //console.log(window.week);
 
     //Remove previously clicked country
     select('.selected').classed('selected', false)
