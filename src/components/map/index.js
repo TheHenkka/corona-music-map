@@ -1,4 +1,6 @@
 import jsonMap from './maps/map.json';
+import listeners from './listeners';
+import { countryChanged } from './events';
 import { geoMercator, geoPath, select, geoBounds, geoCentroid } from 'd3';
 import * as topojson from 'topojson-client';
 
@@ -13,7 +15,6 @@ const svg = select('#map')
 const projection = geoMercator().center([25, 60]).scale(100);
 const path = geoPath().projection(projection);
 
-let clickedCountry = [];
 
 //Loading and drawing map. Give countries some attributes to help access them.
 const drawMap = (map) => {
@@ -31,22 +32,27 @@ const drawMap = (map) => {
         .attr('class', 'countries')
         .on('click', selectedCountry)
         //.on('mouseover', showToolTip)
-        .attr('d', path);
+        .attr('d', path)
+        .exit();
 };
+
 
 //Click event for selecting country
 function selectedCountry() {
 
-    clickedCountry = select(this);
-    //console.log(window.week);
+    let clickedCountry = select(this);
+    console.log(clickedCountry.attr("country-name"));
 
     //Remove previously clicked country
-    select('.selected').classed('selected', false)
+    select('.selected').classed('selected', false);
     
     //Paint it
-    clickedCountry.classed('selected', true)
-    
+    clickedCountry.classed('selected', true);
+
+    window.country = clickedCountry.attr("country-name");
+    window.dispatchEvent(countryChanged);
 }
+
 
 //TODO::Hovering shows tooltip
 function showToolTip() {
@@ -59,4 +65,5 @@ export default async () => {
     } catch (error) {
         console.error(error);
     }
+    listeners();
 };

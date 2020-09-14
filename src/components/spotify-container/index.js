@@ -1,6 +1,5 @@
 import codes from '../../../data/nameToCode.json';
 import listeners from './listeners';
-import { weekChanged } from './events';
 
 const axios = require('axios');
 let spotifyData = [];
@@ -15,37 +14,19 @@ if (spot.childElementCount != 0) {
 }
 
 
+//Find matching country code using country name
+//TODO: tests
+function getCountryCode(country) {
+    let code ='';
 
-
-function dothis() {
-    console.log("WEEK" + window.week);
-    window.week++;
-    console.log("WEEK" + window.week);
-    document.dispatchEvent(weekChanged);
-}
-
-
-
-/*
-function httpGetAsync(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
+    try {
+        code = codes.find(item => item.country === country).abbreviation.toLowerCase();
+    } catch (error) {
+        code ='global';
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
+    
+    return code;
 }
-
-*/
-export const taata = () => {
-    const testi = document.getElementById('info');
-    var newButton = document.createElement("button")
-    newButton.innerHTML = "HELO";
-    newButton.onclick = dothis;
-    testi.appendChild(newButton);
-}
-
 
 //TODO: Tests and checks
 //Finds Spotify data from selected country
@@ -58,14 +39,9 @@ export const getSpotifyData = () => {
     lastDay.setDate(lastDay.getDate() + 7);
 
     const date = firstDay.toISOString().split('T')[0] + '--' + lastDay.toISOString().split('T')[0];
-    console.log(date);
 
-    let countryCode = "global";
-
-    //Find matching country code using country name
-    countryCode = codes.find(item => item.country === window.country).abbreviation.toLowerCase();
+    let countryCode = getCountryCode(window.country);
     let theUrl = 'regional/' + countryCode + '/weekly/' + date + '/download';
-
 
     //Using Axios get data from Spotify. Goes through proxy server. BUT only when init. 
     axios.get(theUrl)
@@ -81,16 +57,12 @@ export const getSpotifyData = () => {
         .catch(function (error) {
             // handle error
             console.log(error);
-            console.log("error");
         });
 }
 
 
-export default async () => {
+export default () => {
     getSpotifyData();
-    getSpotifyData();
-    taata();
     listeners();
-    dothis();
     
 };

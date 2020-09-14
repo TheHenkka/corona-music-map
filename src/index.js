@@ -6,9 +6,9 @@ import globals from './globals';
 async function init() {
     globals();
     await components.MapComponent();
-    await components.SpotifyComponent();
-    await components.InfoComponent();
-
+    await components.SliderComponent();
+    components.SpotifyComponent();
+    components.InfoComponent();
 }
 
 document.addEventListener('DOMContentLoaded', init);
