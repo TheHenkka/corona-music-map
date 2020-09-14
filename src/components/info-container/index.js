@@ -9,7 +9,7 @@ export const getCoronaData = () => {
         .then(function (response) {
             if (response.status = "200") {
                 console.log("OK!");
-                console.log(response.data);
+                //console.log(response.data);
             }
         })
         .catch(function (error) {

@@ -8,6 +8,7 @@ function dothis() {
     document.dispatchEvent(weekChanged);
 }
 
+/*
 
 export const changeWeek = () => {
     console.log("AAJAJ");
@@ -17,6 +18,24 @@ export const changeWeek = () => {
     newButton.onclick = dothis;
     testi.appendChild(newButton);
 }
+
+*/
+
+
+export const changeWeek = () => {
+    console.log("AAJAJ");
+    const slider = document.getElementById('weekSlider');
+    const output = document.getElementById("weekNum");
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+        window.week = this.value;
+        window.dispatchEvent(weekChanged);
+    }
+}
+
+
+
+
 
 export default async () => {
     changeWeek();
