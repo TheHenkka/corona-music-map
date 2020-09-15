@@ -8,11 +8,27 @@
 </head>
 
 <body>
+    <div class="info-container">
+        <h2>COVID-19 info</h2>
+        <div id="info">
+            <h2 id="countryName" >Finland</h2>
+            <ul id="info-list">
+                <li id="population">Population: 5,5mil.</li>
+                <li id="caseNum">Cases: 1 243</li>
+                <li id="deadNum">Deaths: 42</li>
+               
+
+
+
+            </ul>
+        </div>
+    </div>
     <div class="map-container">
         <div id="map"></div>
     </div>
     <div class="spotify-container">
-        <iframe id="spotify1" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe>
+        <h2>Spotify top songs</h2>
+        <iframe id="spotify1" class="spotify-list" src="" frameborder="0" allowtransparency="true"></iframe>
         <!-- <ul style="list-style: none;"> 
             <li><iframe id="spotify1" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe></li>
             <li><iframe id="spotify2" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe></li>
@@ -20,12 +36,9 @@
         </ul>
         </!-->
     </div>
-    <div class="info-container">
-        <div id="info"></div>
-    </div>
     <div class="slider-container">
-        <input type="range" name="weekSlider" id="weekSlider" min="1" max="52" value="1">
-        <p>Value: <span id="weekNum"></span></p>
+        <input type="range" id="weekSlider" min="1" max="52" value="1" class="slider">
+        <output id="weekNum" class="sliderNum">1</output>
     </div>
 </body>
 

@@ -1,18 +1,23 @@
-import jsonMap from './maps/map.json';
+import jsonMap from './maps/map2.json';
 import listeners from './listeners';
 import { countryChanged } from './events';
-import { geoMercator, geoPath, select, geoBounds, geoCentroid } from 'd3';
+import { geoMercator, geoNaturalEarth1, geoPath, select, geoBounds, geoCentroid } from 'd3';
 import * as topojson from 'topojson-client';
 
-const width = 1200;
-const height = 600;
+const width = 800;//1200;
+const height = 800;
 
 const svg = select('#map')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
 
-const projection = geoMercator().center([25, 60]).scale(100);
+//const projection = geoNaturalEarth1().center([50, 60]).scale(600);
+
+var projection = geoMercator() 
+								   .center([ 17, 52 ]) 
+								   .translate([ width/2, height/2 ])
+								   .scale([ width/1.5 ]);
 const path = geoPath().projection(projection);
 
 
@@ -20,7 +25,7 @@ const path = geoPath().projection(projection);
 const drawMap = (map) => {
 
     //Load map from JSON
-    const countries = topojson.feature(map, map.objects.countries).features;
+    const countries = topojson.feature(map, map.objects.custom).features;
 
     //Draw it
     const paths = svg.selectAll('path')
