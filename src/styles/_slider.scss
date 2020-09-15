@@ -1,0 +1,27 @@
+.slider-container {
+  position: fixed; 
+  bottom: 0; 
+  width: 100%;
+  align-content: center;
+  background-color: rgb(49, 49, 49);
+  //height: 50px;
+  
+}
+.slider{
+  width: 80%;
+  margin-left: 10%;
+  opacity: 0.75;
+
+  
+  height: 25px; 
+  background: red; 
+  outline: none;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.sliderNum{
+align-items: center;
+}
