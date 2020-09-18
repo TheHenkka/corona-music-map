@@ -1,20 +1,21 @@
 .slider-container {
-  position: fixed; 
-  bottom: 0; 
+  position: fixed;
+  bottom: 0;
   width: 100%;
   align-content: center;
   background-color: rgb(49, 49, 49);
   //height: 50px;
-  
+
 }
-.slider{
+
+.slider {
   width: 80%;
   margin-left: 10%;
   opacity: 0.75;
 
-  
-  height: 25px; 
-  background: red; 
+
+  height: 25px;
+  background: red;
   outline: none;
 }
 
@@ -22,6 +23,12 @@
   opacity: 1;
 }
 
-.sliderNum{
-align-items: center;
+.sliderNum {
+  align-items: center;
+}
+
+.button {
+  //margin-left: 5%;
+  background-color: black;
+  color: red;
 }

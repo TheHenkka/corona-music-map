@@ -1,16 +1,38 @@
 import listeners from './listeners';
 const axios = require('axios');
-//import { weekChanged } from './events';
 
 //Using Axios get data from COVID-19 API.
 export const getCoronaData = () => {
-
-    axios.get('https://api.covid19api.com/dayone/country/' + window.country + '/status/confirmed')
+    axios.get('https://api.covid19api.com/total/country/' + window.country)
         .then(function (response) {
-            if (response.status = "200") {
-                console.log("OK!");
-                //console.log(response.data);
+
+            console.log(response.data[0].Date);
+
+            console.log(response.data);
+
+            let i = 0;
+
+            let id = setInterval(myTimer, 500);
+
+            //if (window.week >= 4) {
+            function myTimer() {
+                if (window.week >= 4) {
+                    document.getElementById("countryName").innerHTML = window.country;
+                    document.getElementById("caseNum").innerHTML = "Total Cases: " + response.data[i].Confirmed;
+                    document.getElementById("deadNum").innerHTML = "Deaths: " + response.data[i].Deaths;
+                    document.getElementById("recovNum").innerHTML = "Recovered: " + response.data[i].Recovered;
+
+                    if (typeof response.data[i + 1] !== 'undefined')
+                        i++;
+                    else {
+                        console.log("YLI");
+                        clearInterval(id);
+                    }
+                }
             }
+
+            //clearInterval(id);
+
         })
         .catch(function (error) {
             // handle error
@@ -20,6 +42,6 @@ export const getCoronaData = () => {
 
 
 export default () => {
-    //getCoronaData();
+    getCoronaData();
     listeners();
 };

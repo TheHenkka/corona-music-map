@@ -3,7 +3,7 @@ import { getCoronaData } from './index';
 export default () => {
 
     window.addEventListener('weekChanged', () => {
-        getCoronaData();
+        //getCoronaData();
 
     }, false);
 

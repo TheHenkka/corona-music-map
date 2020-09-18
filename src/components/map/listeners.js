@@ -1,8 +1,6 @@
 
 import { countryChanged } from './events';
 
-
-
 export default () => {
 
     window.addEventListener('countryChanged', async () => {
@@ -17,13 +15,10 @@ export default () => {
 
     window.addEventListener('weekChanged', async () => {
         try {
-            console.log("2");
             //getSpotifyData();
             //getCoronaData();
         } catch (error) {
             console.error('Country change has caused an error: ', error);
         }
     }, false);
-
-    
 }
