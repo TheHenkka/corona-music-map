@@ -7,16 +7,15 @@ export const getCoronaData = () => {
         .then(function (response) {
 
             console.log(response.data[0].Date);
-
             console.log(response.data);
 
             let i = 0;
+            let id;
 
-            let id = setInterval(myTimer, 500);
+            id = setInterval(myTimer, 500);
 
-            //if (window.week >= 4) {
             function myTimer() {
-                if (window.week >= 4) {
+                if (window.week >= 4 && window.pause === false) {
                     document.getElementById("countryName").innerHTML = window.country;
                     document.getElementById("caseNum").innerHTML = "Total Cases: " + response.data[i].Confirmed;
                     document.getElementById("deadNum").innerHTML = "Deaths: " + response.data[i].Deaths;
@@ -30,9 +29,6 @@ export const getCoronaData = () => {
                     }
                 }
             }
-
-            //clearInterval(id);
-
         })
         .catch(function (error) {
             // handle error

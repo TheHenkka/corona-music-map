@@ -5,3 +5,5 @@ const createEvent = (name) => {
 };
 
 export const weekChanged = createEvent('weekChanged');
+export const pauseSlider = createEvent('pauseSlider');
+export const playSlider = createEvent('playSlider');

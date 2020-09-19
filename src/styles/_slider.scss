@@ -2,21 +2,35 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  align-content: center;
   background-color: rgb(49, 49, 49);
   //height: 50px;
-
 }
 
 .slider {
   width: 80%;
   margin-left: 10%;
+  //height: 25px;
   opacity: 0.75;
+  background: rgb(99, 99, 99);
+  outline: none;  
+  border-radius: 5px;    
+}
 
-
+.slider::-webkit-range-thumb {
+  -webkit-appearance: none;
+  width: 25px;
   height: 25px;
-  background: red;
-  outline: none;
+  background: darkred;
+  
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: darkred;
+  
+  cursor: pointer;
 }
 
 .slider:hover {
@@ -31,4 +45,8 @@
   //margin-left: 5%;
   background-color: black;
   color: red;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
 }

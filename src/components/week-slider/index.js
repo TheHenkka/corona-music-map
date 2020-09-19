@@ -1,17 +1,28 @@
 import listeners from './listeners';
 import { weekChanged } from './events';
 
-export const changeWeek = () => {
+
+export const updateButton = () => {
+    if (window.pause === false)
+        document.getElementById("buttonClass").className = "fa fa-pause";
+    else
+        document.getElementById("buttonClass").className = "fa fa-play";
+};
+
+
+export const sliderInit = async () => {
+
     const slider = document.getElementById('weekSlider');
     const output = document.getElementById("weekNum");
-    slider.oninput = function () {
-        output.innerHTML = this.value;
-        window.week = this.value;
-        window.dispatchEvent(weekChanged);
-    }
-}
+
+    window.week = 0;
+    slider.value = 0;
+    output.innerHTML = 0;
+    window.dispatchEvent(weekChanged);
+};
+
 
 export default async () => {
-    changeWeek();
+    await sliderInit();
     listeners();
 };

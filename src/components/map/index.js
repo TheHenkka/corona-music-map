@@ -1,7 +1,7 @@
 import jsonMap from './maps/map2.json';
 import listeners from './listeners';
 import { countryChanged } from './events';
-import { geoMercator, geoNaturalEarth1, geoPath, select, geoBounds, geoCentroid } from 'd3';
+import { geoMercator, geoNaturalEarth1, geoPath, select, geoBounds, geoCentroid, mouse } from 'd3';
 import * as topojson from 'topojson-client';
 
 const width = 800;//1200;
@@ -12,13 +12,16 @@ const svg = select('#map')
     .attr('width', width)
     .attr('height', height);
 
-//const projection = geoNaturalEarth1().center([50, 60]).scale(600);
+var projection = geoMercator()
+    .center([17, 52])
+    .translate([width / 2, height / 2])
+    .scale([width / 1.5]);
 
-var projection = geoMercator() 
-								   .center([ 17, 52 ]) 
-								   .translate([ width/2, height/2 ])
-								   .scale([ width/1.5 ]);
 const path = geoPath().projection(projection);
+
+var tooltip = select('#map')
+    .append('div')
+    .attr('class', 'tooltip')
 
 
 //Loading and drawing map. Give countries some attributes to help access them.
@@ -36,21 +39,48 @@ const drawMap = (map) => {
         .attr('country-name', (d) => d.properties.name)
         .attr('class', 'countries')
         .on('click', selectedCountry)
-        //.on('mouseover', showToolTip)
+        .on('mouseover', showToolTip)
+        .on('mouseout', hideToolTip)
+        .on('mousemove', moveTooltip)
         .attr('d', path)
         .exit();
 };
 
 
+//Show tooltip when entering element
+function showToolTip() {
+    tooltip.style('visibility', 'visible')
+}
+
+
+//Hide tooltip when leaving element
+function hideToolTip() {
+    tooltip.style('visibility', 'hidden')
+}
+
+
+//Move tooltip using mouse position inside the element
+function moveTooltip() {
+    var xPos = mouse(this)[0];
+    var yPos = mouse(this)[1];
+
+    //Map is 25% from the left
+    var xPosWin = window.innerWidth / 4 + 20 + xPos;
+
+    tooltip.text(select(this).attr("country-name"))
+        .style("left", xPosWin + "px")
+        .style("top", yPos + "px")
+}
+
+
 //Click event for selecting country
 function selectedCountry() {
 
-    let clickedCountry = select(this);
-    console.log(clickedCountry.attr("country-name"));
+    const clickedCountry = select(this);
 
     //Remove previously clicked country
     select('.selected').classed('selected', false);
-    
+
     //Paint it
     clickedCountry.classed('selected', true);
 
@@ -58,11 +88,6 @@ function selectedCountry() {
     window.dispatchEvent(countryChanged);
 }
 
-
-//TODO::Hovering shows tooltip
-function showToolTip() {
-    
-}
 
 export default async () => {
     try {

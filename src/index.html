@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 </head>
 
@@ -29,7 +30,7 @@
     </div>
     <div class="spotify-container">
         <h2>Spotify top songs</h2>
-        <iframe id="spotify1" class="spotify-list" src="" frameborder="0" allowtransparency="true"></iframe>
+        <iframe id="spotify1" class="spotify-list" src="" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
         <!-- <ul style="list-style: none;"> 
             <li><iframe id="spotify1" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe></li>
             <li><iframe id="spotify2" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe></li>
@@ -38,8 +39,8 @@
         </!-->
     </div>
     <div class="slider-container">
-        <button class="button" id="pause">Pause</button>
-        <input type="range" id="weekSlider" min="1" max="52" value="1" class="slider">
+        <button class="button" id="pause"> <i id="buttonClass" class="fa fa-play"></i></button>
+        <input type="range" id="weekSlider" min="1" max="52" value="1" step="0.01" class="slider">
         <output id="weekNum" class="sliderNum">1</output>
     </div>
 </body>

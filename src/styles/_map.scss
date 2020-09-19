@@ -13,5 +13,11 @@
     max-height: 650px;
     overflow: hidden;
     float: left;
-    
+}
+
+.tooltip{
+    //background-color: black;
+    position: absolute;			
+    text-align: center;			
+    pointer-events: none;			
 }
