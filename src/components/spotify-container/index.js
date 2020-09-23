@@ -1,98 +1,36 @@
 import codes from '../../../data/nameToCode.json';
+import countries from '../../../data/spotifyCountries.json';
+//import fakeData from '../../../data/fakeSpotData.csv';
 import listeners from './listeners';
 
 const axios = require('axios');
+let spotifyData;
 
 //Find matching country code using country name
-//TODO: tests and check only EU codes that match Spotify
 function getCountryCode(country) {
 
     let code = '';
 
+    //Try to find country code for selected country if country has Spotify 
     try {
-        code = codes.find(item => item.country === country).abbreviation.toLowerCase();
+        for (let i in countries.countries) {
+            if (countries.countries[i] === country) {
+                console.log(country);
+                code = codes.find(item => item.country === country).abbreviation.toLowerCase();
+            }
+        }
     } catch (error) {
+        console.log("Country code not found! " + error);
         code = 'global';
     }
 
-
-
-    if (code == "by" || code == "ua") {
-        console.log("AAAA");
+    //Some countries don't have Spotify or Spotify charts start in the middle of the year
+    if (code === "ru" ||code === "ua" || code === '') 
         code = 'global';
-    }
-
-    /*
     
-    United States
-    United Kingdom
-    Andorra
-    Argentina
-    Austria
-    Australia
-    Belgium
-    Bulgaria
-    Bolivia
-    Brazil
-    Canada
-    Switzerland
-    Chile
-    Colombia
-    Costa Rica
-    Cyprus
-    Czech Republic
-    Germany
-    Denmark
-    Dominican Republic
-    Ecuador
-    Estonia
-    Spain
-    Finland
-    France
-    Greece
-    Guatemala
-    Hong Kong
-    Honduras
-    Hungary
-    Indonesia
-    Ireland
-    Israel
-    India
-    Iceland
-    Italy
-    Japan
-    Lithuania
-    Luxembourg
-    Latvia
-    Mexico
-    Malaysia
-    Nicaragua
-    Netherlands
-    Norway
-    New Zealand
-    Panama
-    Peru
-    Philippines
-    Poland
-    Portugal
-    Paraguay
-    Romania
-    Russian Federation
-    Sweden
-    Singapore
-    Slovakia
-    El Salvador
-    Thailand
-    Turkey
-    Taiwan
-    South Africa
-    Ukraine
-    Uruguay
-    Viet Nam"
-    */
-
     return code;
 }
+
 
 //Calculate correct ISO dates based on week number 
 //https://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
@@ -121,8 +59,6 @@ function getDateOfISOWeek(w, y) {
 
     //Start day of the week, Monday, needed for corona data
     window.date = year + '-' + month + '-' + dt;
-
-
 
     //Spotify week starts on Friday
     ISOweekStart.setDate(ISOweekStart.getDate() + 4);
@@ -158,47 +94,72 @@ function getDateOfISOWeek(w, y) {
     return year + '-' + month + '-' + dt + '--' + yearEnd + '-' + monthEnd + '-' + dtEnd;
 }
 
+
 //TODO: Tests and checks
-//Get country's top 3 songs of the week. Add them to Spotify embed. 
+//Get country's top 3 songs of the week. 
 export const getSpotifyData = () => {
 
     const date = getDateOfISOWeek(window.week, window.year);
     const countryCode = getCountryCode(window.country);
     const theUrl = 'regional/' + countryCode + '/weekly/' + date + '/download';
 
-    //Using Axios get data from Spotify. Goes through proxy server. BUT only when init. 
+    //Using Axios get data from Spotify. Goes through proxy server.
     axios.get(theUrl)
         .then(function (response) {
-
-            const spotifyData = response.data;
-            //let spotURL = spotifyData.split('\n')[2].split('open.spotify.com/')[1];
-
-            //let a = document.getElementsByClassName("spotify-list");
-
-            const spot1 = document.getElementById('spotify1');
-            let spotURL1 = spotifyData.split('\n')[2].split('open.spotify.com/')[1];
-            spot1.src = "http://open.spotify.com/embed/" + spotURL1;
-
-            //    const spot2 = document.getElementById('spotify2');
-            //    let spotURL2 = spotifyData.split('\n')[3].split('open.spotify.com/')[1];
-            //    spot2.src = "http://open.spotify.com/embed/" + spotURL2;
-            //    //spot2.style.display = "none";
-
-            //    const spot3 = document.getElementById('spotify3');
-            //    let spotURL3 = spotifyData.split('\n')[4].split('open.spotify.com/')[1];
-            //    spot3.src = "http://open.spotify.com/embed/" + spotURL3;
-            //    //spot3.style.display = "none";
-
+            spotifyData = response.data;
+            console.log(spotifyData);
+            updateSpotifyData();
         })
         .catch(function (error) {
             // handle error
+            //spotifyData = fakeData;
             console.log(error);
         });
 }
 
 
+//Add top 3 songs to Spotify embed list. 
+export const updateSpotifyData = () => {
+
+    const list = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < list.length; i++) {
+
+        let spot = spotifyData.split('\n')[2 + i];
+        let spotNum = spot.split(',')[0];
+        let spotSong = spot.split(',')[1].replace(/"/gi, '');
+        let spotArt = spot.split(',')[2].replace(/"/gi, '');
+        let spotStreams = spot.split(',')[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        list[i].innerHTML = spotNum + ". " + spotArt + " - " + spotSong + " " + spotStreams;
+        document.getElementById('spotify' + i).src = "http://open.spotify.com/embed/" + spot.split('open.spotify.com/')[1];
+
+    }
+}
+
+
+//Clicking the list opens element
+function initSpotList() {
+
+    const list = document.getElementsByClassName("collapsible");
+    let i;
+
+    for (i = 0; i < list.length; i++) {
+        list[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+}
+
+
 export default () => {
+    initSpotList();
     getSpotifyData();
     listeners();
-
 };

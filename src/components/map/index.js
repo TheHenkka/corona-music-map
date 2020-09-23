@@ -1,21 +1,21 @@
 import jsonMap from './maps/map2.json';
 import listeners from './listeners';
 import { countryChanged } from './events';
-import { geoMercator, geoNaturalEarth1, geoPath, select, selectAll, geoBounds, geoCentroid, mouse } from 'd3';
+import { geoMercator, geoPath, select, mouse } from 'd3';
 import * as topojson from 'topojson-client';
 
-const width = 800;//1200;
-const height = 800;
+const width = window.innerWidth / 2;      //800;
+const height = window.innerHeight / 1.5;  //800;
 
-const svg = select('#map')
+export const svg = select('#map')
     .append('svg')
     .attr('width', width)
     .attr('height', height);
 
-var projection = geoMercator()
-    .center([17, 52])
+export const projection = geoMercator()
+    .center([25, 57])
     .translate([width / 2, height / 2])
-    .scale([width / 1.5]);
+    .scale([width / 1.75]);
 
 const path = geoPath().projection(projection);
 
@@ -77,7 +77,15 @@ function moveTooltip() {
 //Click event for selecting country
 function selectedCountry() {
 
-    const clickedCountry = select(this);
+    let clickedCountry = select(this);
+
+    //Check if anything is selected on init. Select Finland if not
+    if (clickedCountry.empty()) {
+        clickedCountry = svg.selectAll("path")
+            .filter(function () {
+                return select(this).attr("country-name") == "Finland";
+            })
+    }
 
     //Remove previously clicked country
     select('.selected').classed('selected', false);
@@ -98,5 +106,5 @@ export default async () => {
         console.error(error);
     }
     listeners();
-    //selectedCountry();
+    selectedCountry();
 };
