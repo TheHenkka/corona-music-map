@@ -9,19 +9,26 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a href="https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6"><i class="fa fa-info-circle"></i> John Hopkins dashboard</a>
+        <a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases"><i class="fa fa-info-circle"></i> European Centre for Disease Prevention and Control</a>
+        <a href="https://www.thl.fi/"><i class="fa fa-medkit"></i> THL</a>
+        <a href="https://www.who.int/"><i class="fa fa-medkit" ></i> WHO</a>
+      </div>
     <div class="info-container">
-        <h2>COVID-19 info</h2>
+        <h1>COVID-19 info</h2>
         <div id="info">
             <h2 id="countryName">Finland</h2>
             <ul id="info-list">
-                <li id="population">Population: 5,5mil.</li>
-                <p></p>
-                <li id="caseNum">Total Cases: 0</li>
-                <p></p>
-                <li id="deadNum">Deaths: 0</li>
-                <p></p>
-                <li id="recovNum">Recovered: 0</li>
-                <p></p>
+                <li >Population </li>
+                <p id="population"> </p>
+                <li >Cases</li>
+                <p id="caseNum">0</p>
+                <li >Deaths</li>
+                <p id="deadNum">0</p>
+                <li>Recovered</li>
+                <p  id="recovNum">0</p>
             </ul>
         </div>
     </div>
@@ -29,7 +36,7 @@
         <div id="map"></div>
     </div>
     <div class="spotify-container">
-        <h2>Spotify top songs</h2>
+        <h1>Spotify top songs</h2>
         <iframe id="spotify1" class="spotify-list" src="" width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
         <!-- <ul style="list-style: none;"> 
             <li><iframe id="spotify1" class="spotify-list" src=""  frameborder="0" allowtransparency="true" ></iframe></li>

@@ -16,7 +16,7 @@ export default () => {
         const roundWeek = Math.round(slider.value);
         slider.value = roundWeek;
         sliderNum.value = roundWeek;
-        window.year = roundWeek;
+        window.week = roundWeek;
         window.dispatchEvent(weekChanged);
     });
 

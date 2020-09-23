@@ -1,14 +1,17 @@
-import { getCoronaData } from './index';
+import { getCoronaData, id, updateCoronaData } from './index';
 
 export default () => {
 
     window.addEventListener('weekChanged', () => {
-        //getCoronaData();
+        clearInterval(id);
+        updateCoronaData();
 
     }, false);
 
     window.addEventListener('countryChanged', () => {
+        clearInterval(id);
         getCoronaData();
+        updateCoronaData();
     }, false);
 
 }

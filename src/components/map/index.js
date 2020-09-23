@@ -1,7 +1,7 @@
 import jsonMap from './maps/map2.json';
 import listeners from './listeners';
 import { countryChanged } from './events';
-import { geoMercator, geoNaturalEarth1, geoPath, select, geoBounds, geoCentroid, mouse } from 'd3';
+import { geoMercator, geoNaturalEarth1, geoPath, select, selectAll, geoBounds, geoCentroid, mouse } from 'd3';
 import * as topojson from 'topojson-client';
 
 const width = 800;//1200;
@@ -37,6 +37,7 @@ const drawMap = (map) => {
         .append('path')
         .attr('id', (d) => d.properties.id)
         .attr('country-name', (d) => d.properties.name)
+        .attr('country-pop', (d) => d.properties.pop_est)
         .attr('class', 'countries')
         .on('click', selectedCountry)
         .on('mouseover', showToolTip)
@@ -85,6 +86,7 @@ function selectedCountry() {
     clickedCountry.classed('selected', true);
 
     window.country = clickedCountry.attr("country-name");
+    window.population = clickedCountry.attr("country-pop");
     window.dispatchEvent(countryChanged);
 }
 
@@ -96,4 +98,5 @@ export default async () => {
         console.error(error);
     }
     listeners();
+    //selectedCountry();
 };

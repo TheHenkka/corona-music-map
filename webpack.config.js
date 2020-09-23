@@ -6,7 +6,7 @@ module.exports = {
     devServer: {
         hotOnly: true,
         progress: true,
-         watchContentBase: true,
+        watchContentBase: true,
         inline: true,
         historyApiFallback: true,
         //Proxy is needed for Spotify. CORS issue.

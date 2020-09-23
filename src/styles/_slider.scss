@@ -1,14 +1,22 @@
 .slider-container {
   position: fixed;
-  bottom: 0;
-  width: 100%;
+  bottom: 10%;
+  width: 70%;
+  margin-left: 15%;
+  height: 50px;
+  box-shadow: 2px 10px 7px rgba(0, 0, 0, 0.5);
+  //margin-right: 15%;
+  border-radius: 12px;
+  //height: 3%;
+  padding-top: 10px;
   background-color: rgb(49, 49, 49);
   //height: 50px;
 }
 
 .slider {
   width: 80%;
-  margin-left: 10%;
+  margin-left: 5%;
+  margin-top: 10px;
   //height: 25px;
   opacity: 0.75;
   background: rgb(99, 99, 99);
@@ -20,21 +28,20 @@
   -webkit-appearance: none;
   width: 25px;
   height: 25px;
-  background: darkred;
-  
+  background: rgb(80, 80, 80);
   cursor: pointer;
 }
 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
-  background: darkred;
-  
+  background: rgb(80, 80, 80);
   cursor: pointer;
 }
 
 .slider:hover {
   opacity: 1;
+  //background: rgb(99, 99, 99);
 }
 
 .sliderNum {
@@ -42,11 +49,16 @@
 }
 
 .button {
-  //margin-left: 5%;
-  background-color: black;
-  color: red;
+  margin-left: 3%;
+  background-color: rgb(80, 80, 80);
+  color: rgb(200, 200, 200);
   border: none;
-  padding: 12px 16px;
+  transform: translateY(-4px);
+  padding: 10px 15px;
   border-radius: 12px;
+  cursor: pointer;
+
+}.button:hover {
+  background-color: rgb(99, 99, 99);
   cursor: pointer;
 }

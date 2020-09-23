@@ -1,34 +1,45 @@
 import listeners from './listeners';
 const axios = require('axios');
 
+export let id;
+
+let coronaData;
+let i = 0;
+
+//Find corona data for selected week
+export const updateCoronaData = () => {
+
+    //Find correct date and index
+    if (coronaData.findIndex(obj => obj.Date.split("T")[0]===window.date)) {
+        i = 5 + 7 * window.week;
+        id = setInterval(myTimer, 710);
+    }
+
+    //If slider is playing, update info "Total Cases: "
+    function myTimer() {
+
+        if (window.pause === false) {
+            document.getElementById("caseNum").innerHTML =  coronaData[i].Confirmed;
+            document.getElementById("deadNum").innerHTML = coronaData[i].Deaths;
+            document.getElementById("recovNum").innerHTML = coronaData[i].Recovered;
+
+            //Make sure array has values
+            if (typeof coronaData[i + 1] !== 'undefined')
+                i++;
+            else {
+                clearInterval(id);
+            }
+        }
+    }
+}
+
 //Using Axios get data from COVID-19 API.
 export const getCoronaData = () => {
     axios.get('https://api.covid19api.com/total/country/' + window.country)
         .then(function (response) {
-
-            console.log(response.data[0].Date);
-            console.log(response.data);
-
-            let i = 0;
-            let id;
-
-            id = setInterval(myTimer, 500);
-
-            function myTimer() {
-                if (window.week >= 4 && window.pause === false) {
-                    document.getElementById("countryName").innerHTML = window.country;
-                    document.getElementById("caseNum").innerHTML = "Total Cases: " + response.data[i].Confirmed;
-                    document.getElementById("deadNum").innerHTML = "Deaths: " + response.data[i].Deaths;
-                    document.getElementById("recovNum").innerHTML = "Recovered: " + response.data[i].Recovered;
-
-                    if (typeof response.data[i + 1] !== 'undefined')
-                        i++;
-                    else {
-                        console.log("YLI");
-                        clearInterval(id);
-                    }
-                }
-            }
+            coronaData = response.data;
+            document.getElementById("countryName").innerHTML = window.country;
+            document.getElementById("population").innerHTML = window.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         })
         .catch(function (error) {
             // handle error

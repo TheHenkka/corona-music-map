@@ -20,8 +20,8 @@ function getCountryCode(country) {
     if (code == "by" || code == "ua") {
         console.log("AAAA");
         code = 'global';
-    }  
-                                                                                                         
+    }
+
     /*
     
     United States
@@ -106,12 +106,30 @@ function getDateOfISOWeek(w, y) {
     else
         ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
 
-    //Spotify week starts on Friday
-    ISOweekStart.setDate(ISOweekStart.getDate() + 4);
 
     let year = ISOweekStart.getFullYear();
     let month = ISOweekStart.getMonth() + 1;
     let dt = ISOweekStart.getDate();
+
+    //If day or month is single digit, make it double
+    if (dt < 10) {
+        dt = '0' + dt;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+
+    //Start day of the week, Monday, needed for corona data
+    window.date = year + '-' + month + '-' + dt;
+
+
+
+    //Spotify week starts on Friday
+    ISOweekStart.setDate(ISOweekStart.getDate() + 4);
+
+    year = ISOweekStart.getFullYear();
+    month = ISOweekStart.getMonth() + 1;
+    dt = ISOweekStart.getDate();
 
     //If day or month is single digit, make it double
     if (dt < 10) {
@@ -144,7 +162,7 @@ function getDateOfISOWeek(w, y) {
 //Get country's top 3 songs of the week. Add them to Spotify embed. 
 export const getSpotifyData = () => {
 
-    const date = getDateOfISOWeek(window.week, 2020);
+    const date = getDateOfISOWeek(window.week, window.year);
     const countryCode = getCountryCode(window.country);
     const theUrl = 'regional/' + countryCode + '/weekly/' + date + '/download';
 
@@ -170,9 +188,6 @@ export const getSpotifyData = () => {
             //    let spotURL3 = spotifyData.split('\n')[4].split('open.spotify.com/')[1];
             //    spot3.src = "http://open.spotify.com/embed/" + spotURL3;
             //    //spot3.style.display = "none";
-
-
-            //console.log(spotifyData);
 
         })
         .catch(function (error) {
