@@ -4,13 +4,13 @@ import { countryChanged } from './events';
 import { geoMercator, geoPath, select, mouse } from 'd3';
 import * as topojson from 'topojson-client';
 
-const width = window.innerWidth / 2;      //800;
-const height = window.innerHeight / 1.5;  //800;
+export const width = window.innerWidth / 2;      //800;
+export const height = window.innerHeight / 1.5;  //800;
 
 export const svg = select('#map')
     .append('svg')
     .attr('width', width)
-    .attr('height', height);
+    .attr('height', height)
 
 export const projection = geoMercator()
     .center([25, 57])

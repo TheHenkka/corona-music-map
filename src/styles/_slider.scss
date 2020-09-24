@@ -5,19 +5,15 @@
   margin-left: 15%;
   height: 50px;
   box-shadow: 2px 10px 7px rgba(0, 0, 0, 0.5);
-  //margin-right: 15%;
   border-radius: 12px;
-  //height: 3%;
   padding-top: 10px;
   background-color: rgb(49, 49, 49);
-  //height: 50px;
 }
 
 .slider {
   width: 80%;
   margin-left: 5%;
   margin-top: 10px;
-  //height: 25px;
   opacity: 0.75;
   background: rgb(99, 99, 99);
   outline: none;  
@@ -41,12 +37,14 @@
 
 .slider:hover {
   opacity: 1;
-  //background: rgb(99, 99, 99);
 }
 
 .sliderNum {
-  align-items: center;
+  font-size: 25px;
+  margin-left: 20px;
+  color: rgb(200, 200, 200);
 }
+
 
 .button {
   margin-left: 3%;

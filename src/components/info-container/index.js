@@ -19,9 +19,9 @@ export const updateCoronaData = () => {
     function myTimer() {
 
         if (window.pause === false) {
-            document.getElementById("caseNum").innerHTML =  coronaData[i].Confirmed;
-            document.getElementById("deadNum").innerHTML = coronaData[i].Deaths;
-            document.getElementById("recovNum").innerHTML = coronaData[i].Recovered;
+            document.getElementById("caseNum").innerHTML =  coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById("deadNum").innerHTML = coronaData[i].Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            document.getElementById("recovNum").innerHTML = coronaData[i].Recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             //Make sure array has values
             if (typeof coronaData[i + 1] !== 'undefined')

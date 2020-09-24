@@ -17,7 +17,7 @@ export const sliderInit = async () => {
 
     window.week = 0;
     slider.value = 0;
-    output.innerHTML = 0;
+    output.innerHTML = "Week: " + 0;
     window.dispatchEvent(weekChanged);
 };
 

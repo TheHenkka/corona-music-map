@@ -15,7 +15,7 @@ export default () => {
     slider.addEventListener('click', () => {
         const roundWeek = Math.round(slider.value);
         slider.value = roundWeek;
-        sliderNum.value = roundWeek;
+        sliderNum.value =  "Week: " + roundWeek;
         window.week = roundWeek;
         window.dispatchEvent(weekChanged);
     });
@@ -44,7 +44,7 @@ export default () => {
         function myTimer() {
             slider.value = parseFloat(slider.value) + 0.01;
             if (slider.value % 1 === 0) {
-                sliderNum.value = slider.value;
+                sliderNum.value =  "Week: " + slider.value;
                 window.week = slider.value;
                 window.dispatchEvent(weekChanged);
             }

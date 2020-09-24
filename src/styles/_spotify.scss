@@ -1,23 +1,25 @@
 .spotify-container {
   box-shadow: 2px 10px 7px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
   width: 22%;
-  height: 600px;
+  overflow: hidden;
   float: left;
-  padding-left: 20px;
+  padding-left: 1%;
+  min-height: 650px;
   margin-left: 1%;
   margin-top: 10px;
   border-radius: 12px;
   background-color: rgb(49, 49, 49);
 }
+
 .spotify-list {
   padding: 1%;
   border-radius: 12px;
-
+  width: 80%;
   overflow: hidden;
 }
 
 .collapsible {
+  overflow: hidden;
   box-shadow: 2px 10px 7px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   padding: 20px;
@@ -26,7 +28,6 @@
   text-align: left;
   outline: none;
   border-radius: 12px;
-
 }
 
 .active, .collapsible:hover {
@@ -38,5 +39,4 @@
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-  
 }
