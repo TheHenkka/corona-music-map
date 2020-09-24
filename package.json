@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm-run-all -p build start-dev-server",
     "start-dev-server": "webpack-dev-server --env.dev --output-path /dist --config webpack.config.js --progress",
-    "build": "webpack -p"
+    "build": " webpack -p "
   },
   "repository": {
     "type": "git",
