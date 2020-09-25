@@ -9,19 +9,30 @@ let i = 0;
 //Find corona data for selected week
 export const updateCoronaData = () => {
 
+
+    const caseNum = document.getElementById("caseNum");
+    const deadNum = document.getElementById("deadNum");
+    const recovNum = document.getElementById("recovNum");
+
     //Find correct date and index
-    if (coronaData.findIndex(obj => obj.Date.split("T")[0]===window.date)) {
+    if (coronaData.findIndex(obj => obj.Date.split("T")[0] === window.date)) {
+
         i = 5 + 7 * window.week;
+
+        caseNum.innerHTML = coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        deadNum.innerHTML = coronaData[i].Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        recovNum.innerHTML = coronaData[i].Recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
         id = setInterval(myTimer, 710);
     }
 
-    //If slider is playing, update info "Total Cases: "
+    //If slider is playing, update info
     function myTimer() {
 
         if (window.pause === false) {
-            document.getElementById("caseNum").innerHTML =  coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            document.getElementById("deadNum").innerHTML = coronaData[i].Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            document.getElementById("recovNum").innerHTML = coronaData[i].Recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            caseNum.innerHTML = coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            deadNum.innerHTML = coronaData[i].Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            recovNum.innerHTML = coronaData[i].Recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             //Make sure array has values
             if (typeof coronaData[i + 1] !== 'undefined')

@@ -15,7 +15,6 @@ function getCountryCode(country) {
     try {
         for (let i in countries.countries) {
             if (countries.countries[i] === country) {
-                console.log(country);
                 code = codes.find(item => item.country === country).abbreviation.toLowerCase();
             }
         }
@@ -106,9 +105,8 @@ export const getSpotifyData = () => {
     //Using Axios get data from Spotify. Goes through proxy server.
     axios.get(theUrl)
         .then(function (response) {
-            spotifyData = response.data;
-            console.log(spotifyData);
-            updateSpotifyData();
+            //spotifyData = response.data;
+            updateSpotifyData(response.data);
         })
         .catch(function (error) {
             // handle error
@@ -119,14 +117,14 @@ export const getSpotifyData = () => {
 
 
 //Add top 3 songs to Spotify embed list. 
-export const updateSpotifyData = () => {
+export const updateSpotifyData = (res) => {
 
     const list = document.getElementsByClassName("collapsible");
     let i;
 
     for (i = 0; i < list.length; i++) {
 
-        let spot = spotifyData.split('\n')[2 + i];
+        let spot = res.split('\n')[2 + i];
         let spotNum = spot.split(',')[0];
         let spotSong = spot.split(',')[1].replace(/"/gi, '');
         let spotArt = spot.split(',')[2].replace(/"/gi, '');

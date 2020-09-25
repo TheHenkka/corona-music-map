@@ -3,17 +3,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
+    /*
+
+    devtool: '#eval-source-map',
+    //devtool: 'inline-source-map',
+
     devServer: {
-        hotOnly: true,
-        progress: true,
-        watchContentBase: true,
-        inline: true,
-        historyApiFallback: true,
         //Proxy is needed for Spotify. CORS issue.
         proxy: {
             '/regional': {
                 target: 'https://spotifycharts.com',
-                secure: false,
                 changeOrigin: true,
                 headers: {
                     Connection: 'keep-alive',
@@ -22,6 +21,8 @@ module.exports = {
         }
 
     },
+
+    */
 
     module: {
         rules: [
@@ -49,7 +50,6 @@ module.exports = {
             template: './src/index.html',
             fileName: 'index.html',
         }),
-
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"

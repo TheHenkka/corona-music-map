@@ -1,4 +1,4 @@
-import { getSpotifyData, updateSpotifyData } from './index';
+import { getSpotifyData } from './index';
 
 export default () => {
     window.addEventListener('weekChanged', () => {
