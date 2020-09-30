@@ -3,3 +3,5 @@ node_modules/
 src/components/test.js
 src/styles/main.scss
 src/components/test.js
+data/fakeSpotData.csv
+data/fakeSpotData.txt

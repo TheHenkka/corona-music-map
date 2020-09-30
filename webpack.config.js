@@ -3,8 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
-    /*
-
     devtool: '#eval-source-map',
     //devtool: 'inline-source-map',
 
@@ -22,7 +20,7 @@ module.exports = {
 
     },
 
-    */
+    
 
     module: {
         rules: [
