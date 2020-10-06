@@ -1,71 +1,63 @@
-var proxy = require('express-http-proxy');
 var path = require('path');
 var express = require('express');
-var app = require('express')();
- 
-app.use('/regional', proxy('https://spotifycharts.com'));
-
-app.use(express.static(path.join(__dirname, '/dist')));
-
-
-app.get('/*', function(req, res){
-  res.sendFile("index.html", {root: path.join(__dirname, '/dist')});
-});
-
-app.listen(8080, function() {
-  console.log("App is running at localhost: 80")
-});
-
-/*
-
-var http = require('http');
-var httpProxy = require('http-proxy');
-var proxy = httpProxy.createProxyServer({});
-
-http.createServer(function(req, res) {
-    proxy.web(req, res, { target: 'http://www.google.com' });
-}).listen(8080);
-
-
-
-
-/*
-
-var express = require('express');
-
-
-//var httpProxy = require('http-proxy');
-//var apiProxy = httpProxy.createProxyServer();
+const sqlite3 = require('sqlite3').verbose();
 
 var app = express();
 
 app.use(express.static(path.join(__dirname, '/dist')));
 
+app.get('/*', function (req, res) {
 
+    //Get Spotify data from database. 
+    if (req.url.startsWith("/data")) {
 
-app.get('/*', function(req, res){
-  res.sendFile("index.html", {root: path.join(__dirname, '/dist')});
+        const dataList = req.url.split(",");
+
+        getData(dataList[1], dataList[2], function (err, data) {
+            if (err) {
+                // error handling code goes here
+                console.log("ERROR : ", err);
+            } else {
+                res.send(data);
+            }
+        });
+    }
+    else
+        res.sendFile("index.html", { root: path.join(__dirname, '/dist') });
 });
 
 
-app.listen(8080, function() {
-  console.log("App is running at localhost: 80")
+app.listen(8080, function () {
+    console.log("App is running at localhost: 80")
 });
 
 
-/*
-// Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '0.0.0.0';
-// Listen on a specific port via the PORT environment variable
-var port = process.env.PORT || 8080;
- 
-var cors_proxy = require('cors-anywhere');
-cors_proxy.createServer({
-    originWhitelist: [], // Allow all origins
-    requireHeader: ['origin', 'x-requested-with'],
-    removeHeaders: ['cookie', 'cookie2']
-}).listen(port, host, function() {
-    console.log('Running CORS Anywhere on ' + host + ':' + port);
-});
+function getData(weekNum, countryName, cb) {
 
-*/
+    let db = new sqlite3.Database('data/spotify.sql', (err) => {
+        if (err)
+            console.error(err.message);
+        else
+            console.log('Connected to the chinook database.');
+    });
+
+    let a = [];
+
+    const sql = `SELECT *
+           FROM week
+           WHERE week  = ? AND country = ?`;
+
+    db.all(sql, [weekNum, countryName], (err, rows) => {
+
+        if (err) 
+            return cb(err, null);
+        
+        rows.forEach((row) => {
+            a.push([row.position, row.artist, row.song, row.streams, row.website]);
+        });
+
+        db.close();
+        
+        return cb(null, a);
+    });
+}

@@ -3,9 +3,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
-    devtool: '#eval-source-map',
+    //devtool: '#eval-source-map',
     //devtool: 'inline-source-map',
 
+    /*
     devServer: {
         //Proxy is needed for Spotify. CORS issue.
         proxy: {
@@ -17,10 +18,8 @@ module.exports = {
                 }
             }
         }
-
     },
-
-    
+    */
 
     module: {
         rules: [

@@ -1,10 +1,10 @@
 import codes from '../../../data/nameToCode.json';
 import countries from '../../../data/spotifyCountries.json';
-//import fakeData from '../../../data/fakeSpotData.csv';
 import listeners from './listeners';
 
 const axios = require('axios');
-let spotifyData;
+
+//TODO: Global lists are not saved to db. Fix it so spotify-container won't crash.
 
 //Find matching country code using country name
 function getCountryCode(country) {
@@ -24,9 +24,9 @@ function getCountryCode(country) {
     }
 
     //Some countries don't have Spotify or Spotify charts start in the middle of the year
-    if (code === "ru" ||code === "ua" || code === '') 
+    if (code === "ru" || code === "ua" || code === '')
         code = 'global';
-    
+
     return code;
 }
 
@@ -59,6 +59,7 @@ function getDateOfISOWeek(w, y) {
     //Start day of the week, Monday, needed for corona data
     window.date = year + '-' + month + '-' + dt;
 
+    /*
     //Spotify week starts on Friday
     ISOweekStart.setDate(ISOweekStart.getDate() + 4);
 
@@ -91,6 +92,8 @@ function getDateOfISOWeek(w, y) {
 
     //Returns date in string format 
     return year + '-' + month + '-' + dt + '--' + yearEnd + '-' + monthEnd + '-' + dtEnd;
+
+    */
 }
 
 
@@ -98,19 +101,17 @@ function getDateOfISOWeek(w, y) {
 //Get country's top 3 songs of the week. 
 export const getSpotifyData = () => {
 
-    const date = getDateOfISOWeek(window.week, window.year);
-    const countryCode = getCountryCode(window.country);
-    const theUrl = 'regional/' + countryCode + '/weekly/' + date + '/download';
+    getDateOfISOWeek(window.week, window.year);
+
+    let data = ['data', window.week, window.country];
 
     //Using Axios get data from Spotify. Goes through proxy server.
-    axios.get(theUrl)
+    axios.get(data) //(theUrl)
         .then(function (response) {
-            //spotifyData = response.data;
             updateSpotifyData(response.data);
         })
         .catch(function (error) {
             // handle error
-            //spotifyData = fakeData;
             console.log(error);
         });
 }
@@ -123,15 +124,8 @@ export const updateSpotifyData = (res) => {
     let i;
 
     for (i = 0; i < list.length; i++) {
-
-        let spot = res.split('\n')[2 + i];
-        let spotNum = spot.split(',')[0];
-        let spotSong = spot.split(',')[1].replace(/"/gi, '');
-        let spotArt = spot.split(',')[2].replace(/"/gi, '');
-        let spotStreams = spot.split(',')[3].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        list[i].innerHTML = spotNum + ". " + spotArt + " - " + spotSong + " " + spotStreams;
-        document.getElementById('spotify' + i).src = "http://open.spotify.com/embed/" + spot.split('open.spotify.com/')[1];
-
+        list[i].innerHTML = res[i][0] + ". " + res[i][1] + " - " + res[i][2] + " " + res[i][3];
+        document.getElementById('spotify' + i).src = "http://open.spotify.com/embed/" + res[i][4].split('open.spotify.com/')[1];
     }
 }
 
