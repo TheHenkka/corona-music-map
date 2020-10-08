@@ -6,21 +6,6 @@ module.exports = {
     //devtool: '#eval-source-map',
     //devtool: 'inline-source-map',
 
-    /*
-    devServer: {
-        //Proxy is needed for Spotify. CORS issue.
-        proxy: {
-            '/regional': {
-                target: 'https://spotifycharts.com',
-                changeOrigin: true,
-                headers: {
-                    Connection: 'keep-alive',
-                }
-            }
-        }
-    },
-    */
-
     module: {
         rules: [
             {

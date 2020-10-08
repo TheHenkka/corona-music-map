@@ -9,15 +9,14 @@ let i = 0;
 //Find corona data for selected week
 export const updateCoronaData = () => {
 
-
     const caseNum = document.getElementById("caseNum");
     const deadNum = document.getElementById("deadNum");
     const recovNum = document.getElementById("recovNum");
 
-    //Find correct date and index
-    if (coronaData.findIndex(obj => obj.Date.split("T")[0] === window.date)) {
+    //Find correct date and index. Corona data start date: 2020-01-22T00:00:00Z
+    if (coronaData[0].Date < window.date) {
 
-        i = 5 + 7 * window.week;
+        i = coronaData.findIndex(obj => obj.Date.split("T")[0] === window.date);
 
         caseNum.innerHTML = coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         deadNum.innerHTML = coronaData[i].Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -37,12 +36,12 @@ export const updateCoronaData = () => {
             //Make sure array has values
             if (typeof coronaData[i + 1] !== 'undefined')
                 i++;
-            else {
+            else
                 clearInterval(id);
-            }
         }
     }
 }
+
 
 //Using Axios get data from COVID-19 API.
 export const getCoronaData = () => {

@@ -15,7 +15,7 @@ app.get('/*', function (req, res) {
 
         getData(dataList[1], dataList[2], function (err, data) {
             if (err) {
-                // error handling code goes here
+                // error handling
                 console.log("ERROR : ", err);
             } else {
                 res.send(data);
@@ -31,33 +31,46 @@ app.listen(8080, function () {
     console.log("App is running at localhost: 80")
 });
 
-
+//Get data from database.
 function getData(weekNum, countryName, cb) {
+
+    let name = decodeURI(countryName);
+    let a = [];
 
     let db = new sqlite3.Database('data/spotify.sql', (err) => {
         if (err)
             console.error(err.message);
         else
-            console.log('Connected to the chinook database.');
+            console.log('Connected to the database.');
     });
 
-    let a = [];
+    const sqlCheck = `SELECT 1
+                FROM countries
+                WHERE country_name = ?`;
 
     const sql = `SELECT *
-           FROM week
+           FROM playlist
            WHERE week  = ? AND country = ?`;
 
-    db.all(sql, [weekNum, countryName], (err, rows) => {
-
-        if (err) 
+    //Check that country exists in database. If not, use Global list.
+    db.all(sqlCheck, [name], (err, rows) => {
+        if (err)
             return cb(err, null);
-        
-        rows.forEach((row) => {
-            a.push([row.position, row.artist, row.song, row.streams, row.website]);
-        });
 
-        db.close();
+        if (rows.length !== 1) 
+            name = 'Global';
         
-        return cb(null, a);
+        db.all(sql, [weekNum, name], (err, rows) => {
+            if (err)
+                return cb(err, null);
+
+            rows.forEach((row) => {
+                a.push([row.position, row.artist, row.song, row.streams, row.website]);
+            });
+
+            db.close();
+
+            return cb(null, a);
+        });
     });
 }

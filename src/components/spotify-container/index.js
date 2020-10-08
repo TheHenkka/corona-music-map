@@ -1,34 +1,6 @@
-import codes from '../../../data/nameToCode.json';
-import countries from '../../../data/spotifyCountries.json';
 import listeners from './listeners';
 
 const axios = require('axios');
-
-//TODO: Global lists are not saved to db. Fix it so spotify-container won't crash.
-
-//Find matching country code using country name
-function getCountryCode(country) {
-
-    let code = '';
-
-    //Try to find country code for selected country if country has Spotify 
-    try {
-        for (let i in countries.countries) {
-            if (countries.countries[i] === country) {
-                code = codes.find(item => item.country === country).abbreviation.toLowerCase();
-            }
-        }
-    } catch (error) {
-        console.log("Country code not found! " + error);
-        code = 'global';
-    }
-
-    //Some countries don't have Spotify or Spotify charts start in the middle of the year
-    if (code === "ru" || code === "ua" || code === '')
-        code = 'global';
-
-    return code;
-}
 
 
 //Calculate correct ISO dates based on week number 
@@ -58,54 +30,17 @@ function getDateOfISOWeek(w, y) {
 
     //Start day of the week, Monday, needed for corona data
     window.date = year + '-' + month + '-' + dt;
-
-    /*
-    //Spotify week starts on Friday
-    ISOweekStart.setDate(ISOweekStart.getDate() + 4);
-
-    year = ISOweekStart.getFullYear();
-    month = ISOweekStart.getMonth() + 1;
-    dt = ISOweekStart.getDate();
-
-    //If day or month is single digit, make it double
-    if (dt < 10) {
-        dt = '0' + dt;
-    }
-    if (month < 10) {
-        month = '0' + month;
-    }
-
-    //Spotify week ends next week on Friday
-    ISOweekStart.setDate(ISOweekStart.getDate() + 7);
-
-    let yearEnd = ISOweekStart.getFullYear();
-    let monthEnd = ISOweekStart.getMonth() + 1;
-    let dtEnd = ISOweekStart.getDate();
-
-    //If day or month is single digit, make it double
-    if (dtEnd < 10) {
-        dtEnd = '0' + dtEnd;
-    }
-    if (monthEnd < 10) {
-        monthEnd = '0' + monthEnd;
-    }
-
-    //Returns date in string format 
-    return year + '-' + month + '-' + dt + '--' + yearEnd + '-' + monthEnd + '-' + dtEnd;
-
-    */
 }
 
 
-//TODO: Tests and checks
 //Get country's top 3 songs of the week. 
 export const getSpotifyData = () => {
 
     getDateOfISOWeek(window.week, window.year);
 
-    let data = ['data', window.week, window.country];
+    const data = ['data', window.week, window.country];
 
-    //Using Axios get data from Spotify. Goes through proxy server.
+    //Using Axios get data from Spotify database.
     axios.get(data) //(theUrl)
         .then(function (response) {
             updateSpotifyData(response.data);

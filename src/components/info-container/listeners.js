@@ -5,7 +5,6 @@ export default () => {
     window.addEventListener('weekChanged', () => {
         clearInterval(id);
         updateCoronaData();
-
     }, false);
 
     window.addEventListener('countryChanged', () => {
