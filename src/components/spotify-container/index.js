@@ -59,7 +59,7 @@ export const updateSpotifyData = (res) => {
     let i;
 
     for (i = 0; i < list.length; i++) {
-        list[i].innerHTML = res[i][0] + ". " + res[i][1] + " - " + res[i][2] + " " + res[i][3];
+        list[i].innerHTML = res[i][0] + ". " + res[i][1] + " - " + res[i][2] + " - " + res[i][3];
         document.getElementById('spotify' + i).src = "http://open.spotify.com/embed/" + res[i][4].split('open.spotify.com/')[1];
     }
 }

@@ -15,7 +15,7 @@ export const updateCoronaData = () => {
 
     //Find correct date and index. Corona data start date: 2020-01-22T00:00:00Z
     if (coronaData[0].Date < window.date) {
-
+  
         i = coronaData.findIndex(obj => obj.Date.split("T")[0] === window.date);
 
         caseNum.innerHTML = coronaData[i].Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -50,6 +50,7 @@ export const getCoronaData = () => {
             coronaData = response.data;
             document.getElementById("countryName").innerHTML = window.country;
             document.getElementById("population").innerHTML = window.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            updateCoronaData();
         })
         .catch(function (error) {
             // handle error
