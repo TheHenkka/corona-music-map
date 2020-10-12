@@ -54,7 +54,7 @@ def addSongs(week, country, position, song, artist, streams, website):
 # Open the database
 def openData():
     try:
-        con = sqlite3.connect(pathlib.Path('data/spotify1.sql'))
+        con = sqlite3.connect(pathlib.Path('data/spotify.sql'))
         con.row_factory = sqlite3.Row
         con.execute("PRAGMA foreign_keys = ON")
         return con
@@ -178,4 +178,4 @@ print("---")
 end = time.time()
 
 print("It took this long!:")
-print(str(datetime.timedelta(end - start)))
+print(end - start)

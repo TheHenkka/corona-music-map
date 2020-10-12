@@ -45,7 +45,11 @@ export default () => {
             slider.value = parseFloat(slider.value) + 0.01;
             if (slider.value % 1 === 0) {
                 sliderNum.value =  "Week: " + slider.value;
-                window.week = slider.value;
+                if (slider.max == window.week) {
+                    window.dispatchEvent(pauseSlider);
+                } else {
+                    window.week = slider.value;
+                }
                 window.dispatchEvent(weekChanged);
             }
         }
