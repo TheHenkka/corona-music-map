@@ -46,6 +46,8 @@ export default () => {
             if (slider.value % 1 === 0) {
                 sliderNum.value =  "Week: " + slider.value;
                 if (slider.max == window.week) {
+                    window.pause = !window.pause;
+                    updateButton();
                     window.dispatchEvent(pauseSlider);
                 } else {
                     window.week = slider.value;
