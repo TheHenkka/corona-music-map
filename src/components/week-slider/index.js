@@ -1,7 +1,7 @@
 import listeners from './listeners';
 import { weekChanged } from './events';
 
-
+//Changes the symbol on the button
 export const updateButton = () => {
     if (window.pause === false)
         document.getElementById("buttonClass").className = "fa fa-pause";
@@ -20,7 +20,7 @@ function getWeekNumber() {
     return Math.ceil((((d - yearStart) / 86400000) + 1) / 7)
 };
 
-
+//Initialize slider
 export const sliderInit = async () => {
 
     const slider = document.getElementById('weekSlider');

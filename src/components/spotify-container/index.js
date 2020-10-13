@@ -41,7 +41,7 @@ export const getSpotifyData = () => {
     const data = ['data', window.week, window.country];
 
     //Using Axios get data from Spotify database.
-    axios.get(data) //(theUrl)
+    axios.get(data)
         .then(function (response) {
             updateSpotifyData(response.data);
         })

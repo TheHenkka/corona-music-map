@@ -10,7 +10,5 @@ export default () => {
     window.addEventListener('countryChanged', () => {
         clearInterval(id);
         getCoronaData();
-        //updateCoronaData();
     }, false);
-
 }

@@ -11,7 +11,7 @@ export default () => {
     const sliderNum = document.getElementById("weekNum");
     const pauseBut = document.getElementById("pause");
 
-
+    //Clicking the slider changes the week
     slider.addEventListener('click', () => {
         const roundWeek = Math.round(slider.value);
         slider.value = roundWeek;
@@ -20,7 +20,7 @@ export default () => {
         window.dispatchEvent(weekChanged);
     });
 
-    
+    //Button pauses/starts the slider
     pauseBut.addEventListener('click', () => {
         window.pause = !window.pause;
         if (window.pause === true)
@@ -31,12 +31,12 @@ export default () => {
         updateButton();
     });
 
-
+    //Stop slider
     window.addEventListener('pauseSlider', () => {
         clearInterval(sliderId);
     });
 
-
+    //Start slider
     window.addEventListener('playSlider', () => {
 
         sliderId = setInterval(myTimer, 50);
