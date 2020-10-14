@@ -7,7 +7,7 @@ Tool to visualize changes to Spotify listening preferences during COVID-19 pande
 ### Prerequisites
   
   1. [Node](https://nodejs.org/) - for npm
-  2. Clone this repository `git clone https://github.com/TheHenkka/corona-music-map/`.
+  2. Clone this repository `git clone https://github.com/TheHenkka/corona-music-map/`
 
   ### Installation
 
