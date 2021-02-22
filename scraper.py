@@ -1,5 +1,3 @@
-import urllib.request
-import urllib.error
 import datetime
 import sqlite3
 import pathlib
@@ -8,6 +6,7 @@ import json
 import csv
 import sys
 import os
+import requests
 
 with open('data/spotifyCountries.json', 'r') as f:
     countryArray = json.load(f)
@@ -72,8 +71,11 @@ def getData(countryName, countryCode):
     weekEnd = weekStart + datetime.timedelta(7)
     i = 1
 
+
     # Loop through every week, get URL and save data to database
-    while datetime.date.today() > weekStart:
+    while datetime.date.today() > weekStart:   
+
+        start = time.time()
 
         week = str(weekStart) + '--' + str(weekEnd)
         weekStart = weekStart + datetime.timedelta(7)
@@ -85,24 +87,18 @@ def getData(countryName, countryCode):
         url = 'https://spotifycharts.com/regional/' + \
             countryCode + '/weekly/' + week + '/download'
 
-        req = urllib.request.Request(
-            url, headers={'User-Agent': 'Mozilla /5.0'})
-
         check = False
         lines = []
 
         # Try to open the URL. If it doesn't open it means Spotify doesn't have data for this week.
         try:
-            data = urllib.request.urlopen(req).read()
-            lines = data.splitlines()
-        except urllib.error.HTTPError as e:
+            data = requests.get(url)
+            lines = data.content.decode('utf-8').splitlines()
+
+        except requests.exceptions.RequestException as e:  
             print("WEEK: " + str(i))
-            print(e.code)
-            check = True
-        except urllib.error.URLError as e:
-            print("WEEK: " + str(i))
-            print(e.args)
-            check = True
+            print(e)
+            check = True        
 
         # For some reason Spotify might not have all weeks per country. Change list to Global list if so.
         if check == True or len(lines) != 202:
@@ -110,22 +106,16 @@ def getData(countryName, countryCode):
             print("No data for the week. Using Global list. WEEK: " + str(i))
 
             url = 'https://spotifycharts.com/regional/global/weekly/' + week + '/download'
-            req = urllib.request.Request(
-                url, headers={'User-Agent': 'Mozilla /5.0'})
+            
             try:
-                data = urllib.request.urlopen(req).read()
-                lines = data.splitlines()
-            except urllib.error.HTTPError as e:
+                data = requests.get(url)
+                lines = data.content.decode('utf-8').splitlines()
+            except requests.exceptions.RequestException as e:  
                 print("WEEK: " + str(i))
-                print(e.code)
+                print(e)
                 i += 1
                 continue
-            except urllib.error.URLError as e:
-                print("WEEK: " + str(i))
-                print(e.args)
-                i += 1
-                continue
-        
+
         # First two lines don't have anything useful
         lines.pop(0)
         lines.pop(0)
@@ -136,8 +126,9 @@ def getData(countryName, countryCode):
             # CSV reader needs iterable strings
             lineList = []
 
-            for line in lines:
-                lineList.append(line.decode())
+            #Store top 10 
+            for line in lines[0:10]:
+                lineList.append(line)
 
             for line in csv.reader(lineList):
                 addSongs(i, countryName, line[0], line[1], line[2], line[3], line[4])
@@ -145,6 +136,26 @@ def getData(countryName, countryCode):
         else:
             print("Can't write to db. Data not found.")
 
+        end = time.time()
+        total = end - start
+
+        if total >5:
+            print("it takes long..")
+        if total >8:
+            print("it takes very long..")
+        if total >12:
+            print("it takes super long..")
+        if total >20:
+            print("weird..")
+        if total >30:
+            print("is it working?")
+        if total >45:
+            print("...?")
+        if total >60:
+            print("..?")
+        if total >90:
+            print(".?")
+            
         i += 1
 
 
@@ -176,6 +187,7 @@ print("OK")
 print("---")
 
 end = time.time()
+total = (end - start)/60
 
 print("It took this long!:")
-print(end - start)
+print(total + " mins")

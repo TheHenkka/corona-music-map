@@ -3,42 +3,22 @@ import listeners from './listeners';
 const axios = require('axios');
 
 
-//Calculate correct ISO dates based on week number 
-//https://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
-function getDateOfISOWeek(w, y) {
-
-    var simple = new Date(y, 0, 1 + (w - 1) * 7);
-    var dow = simple.getDay();
-    var ISOweekStart = simple;
-    if (dow <= 4)
-        ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
-    else
-        ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
-
-
-    let year = ISOweekStart.getFullYear();
-    let month = ISOweekStart.getMonth() + 1;
-    let dt = ISOweekStart.getDate();
-
-    //If day or month is single digit, make it double
-    if (dt < 10) {
-        dt = '0' + dt;
-    }
-    if (month < 10) {
-        month = '0' + month;
-    }
-
-    //Start day of the week, Monday, needed for corona data
-    window.date = year + '-' + month + '-' + dt;
-}
-
-
 //Get country's top 3 songs of the week. 
 export const getSpotifyData = () => {
 
-    getDateOfISOWeek(window.week, window.year);
+    let data;
 
-    const data = ['data', window.week, window.country];
+    //TODO: clean this
+    if (window.year == 2020) {
+        data = ['data', window.week, window.country];
+        console.log(data);
+
+    }
+    if (window.year == 2021){
+        data = ['data', window.week +52, window.country];
+        console.log(data);
+    }
+    
 
     //Using Axios get data from Spotify database.
     axios.get(data)

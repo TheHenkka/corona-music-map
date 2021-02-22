@@ -1,23 +1,19 @@
 {
 "countries": [
-    "United Kingdom",
     "Andorra",
     "Austria",
     "Belgium",
     "Bulgaria",
-    "Switzerland",
     "Cyprus",
     "Czech Republic",
-    "Germany",
     "Denmark",
     "Estonia",
-    "Spain",
     "Finland",
     "France",
+    "Germany",
     "Greece",
     "Hungary",
     "Ireland",
-    "Israel",
     "Iceland",
     "Italy",
     "Lithuania",
@@ -29,10 +25,13 @@
     "Portugal",
     "Romania",
     "Russian Federation",
-    "Sweden",
     "Slovakia",
+    "Spain",
+    "Sweden",
+    "Switzerland",
     "Turkey",
-    "Ukraine"
+    "Ukraine",
+    "United Kingdom"
     ]
 }    
     

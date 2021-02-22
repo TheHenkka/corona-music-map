@@ -28,7 +28,8 @@ export const sliderInit = async () => {
 
     window.week = 1;
     slider.value = 1;
-    slider.max = getWeekNumber();
+    // 2020 +  current week of 2021
+    slider.max =  52 + getWeekNumber();
     output.innerHTML = "Week: " + 1;
     window.dispatchEvent(weekChanged);
 };

@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/TheHenkka/corona-music-map#readme",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.2.1",
     "d3": "^5.16.0",

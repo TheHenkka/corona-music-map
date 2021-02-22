@@ -70,7 +70,7 @@ function moveTooltip() {
 
     tooltip.text(select(this).attr("country-name"))
         .style("left", xPosWin + "px")
-        .style("top", yPos + "px")
+        .style("top", yPos + 55 + "px")
 }
 
 
