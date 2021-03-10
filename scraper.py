@@ -190,4 +190,4 @@ end = time.time()
 total = (end - start)/60
 
 print("It took this long!:")
-print(total + " mins")
+print(str(round(total, 2))+ " mins")

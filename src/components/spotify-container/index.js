@@ -9,15 +9,10 @@ export const getSpotifyData = () => {
     let data;
 
     //TODO: clean this
-    if (window.year == 2020) {
+    if (window.year == 2020) 
         data = ['data', window.week, window.country];
-        console.log(data);
-
-    }
-    if (window.year == 2021){
+    if (window.year == 2021)
         data = ['data', window.week +52, window.country];
-        console.log(data);
-    }
     
 
     //Using Axios get data from Spotify database.
